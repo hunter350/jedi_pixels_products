@@ -1,25 +1,48 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-class ConnectionService{
+import 'product/product_list_service.dart';
+
+class ConnectionService {
   late StreamSubscription<ConnectivityResult> connectivity;
   late ProductListService productListService;
 
-  Future<bool> isInternetConnectionAvailable() async{
+  ConnectionService(ProductListService service) {
+    productListService = service;
+  }
+
+  Future<bool> isInternetConnectionAvailable() async {
     bool isConnectionAvailable = true;
-    var  connectivityResult = await Connectivity().checkConnectivity();
-    if(connectivityResult == ConnectivityResult.none){
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
       isConnectionAvailable = false;
-      //TODO: Alert the Product List Service that no internet connection is available
+      productListService.internetConnectionAvailability == false;
+      productListService.isProductLoading = false;
+      productListService
+          .addProductError('Internet connection is currently not available');
     }
     return isConnectionAvailable;
   }
 
-  watchConnectivity(){
-    //TODO:
+  watchConnectivity(ProductListService productListService) {
+    connectivity = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult status) {
+      switch (status) {
+        case ConnectivityResult.none:
+          productListService.internetConnectionAvailability = false;
+          productListService.isProductLoading = false;
+          productListService.addProductError(
+              'Internet connection is currently not available');
+          break;
+        default:
+          productListService.internetConnectionAvailability = true;
+          productListService.refreshCurrentListProducts();
+      }
+    });
   }
 
-  void cancel(){
-    //TODO:
+  void cancel() {
+    connectivity.cancel();
   }
 }
