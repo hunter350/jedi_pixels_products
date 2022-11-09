@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jedi_pixels_products/services/connection_service.dart';
 import 'package:jedi_pixels_products/services/product/product_list_service.dart';
+import 'package:jedi_pixels_products/widgets/status_message.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -62,9 +63,15 @@ class _HomeState extends State<Home> {
           stream: productListService.getProductList,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!productListService.internetConnectionAvailability) {
-              return const Text('No internet ...');
+              return const StatusMessage(
+                  message: 'Internet connection is currently not available',
+                  bannerMessage: 'none',
+                  bannerColor: Colors.yellow,
+                  textColor: Colors.black);
             }
-            return const Text('No internet ...');
+
+            //TODO: check snapshot connection state
+            return const Text('Hello');
           },
         ),
       ),

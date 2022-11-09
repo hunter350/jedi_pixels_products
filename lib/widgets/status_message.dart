@@ -20,7 +20,7 @@ class StatusMessage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Banner(
-          message: message,
+          message: bannerMessage,
           location: BannerLocation.topStart,
           color: bannerColor,
           textStyle: TextStyle(color: textColor),
