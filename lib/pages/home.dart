@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jedi_pixels_products/services/auth/auth_service.dart';
 import 'package:jedi_pixels_products/services/connection_service.dart';
 import 'package:jedi_pixels_products/services/product/product_list_service.dart';
 import 'package:jedi_pixels_products/widgets/status_message.dart';
@@ -14,6 +15,7 @@ class _HomeState extends State<Home> {
   late ConnectionService connectionService;
 
   //late ProductService  productService;
+  AuthServiceResponse authServiceResponse = AuthServiceResponse();
   final ProductListService productListService = ProductListService();
   final ScrollController scrollController = ScrollController();
 
@@ -23,6 +25,7 @@ class _HomeState extends State<Home> {
     //AFTER....
     connectionService = ConnectionService(productListService);
     connectionService.watchConnectivity(productListService);
+    getAuth();
     //Check if scroll has reached the bottom, then retrieve the next 10 records/products
     scrollController.addListener(() {
       if (scrollController.offset ==
@@ -51,6 +54,29 @@ class _HomeState extends State<Home> {
     return productListService.internetConnectionAvailability;
   }
 
+  Future<void> getAuth() async {
+    productListService.internetConnectionAvailability =
+        await checkInternetConnection();
+
+    if (!productListService.internetConnectionAvailability) {
+      return;
+    }
+
+//Authenticate User and look for credential errors
+    authServiceResponse = await AuthService.login();
+    if (authServiceResponse.statusCode == 200 &&
+        authServiceResponse.error != 'Error Response') {
+      productListService.isProductLoading = false;
+      //TODO: Get products
+    } else {
+      productListService.isProductLoading = false;
+      final String error = authServiceResponse.error;
+      productListService.addProductError(error);
+    }
+  }
+
+  Future<void> getProducts() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +97,29 @@ class _HomeState extends State<Home> {
             }
 
             //TODO: check snapshot connection state
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.active:
+                if (snapshot.hasError) {
+                  return StatusMessage(
+                      message: '${snapshot.error}',
+                      bannerMessage:
+                          !productListService.internetConnectionAvailability
+                              ? 'none'
+                              : 'error',
+                      bannerColor:
+                          !productListService.internetConnectionAvailability
+                              ? Colors.yellow
+                              : Colors.red,
+                      textColor:
+                          !productListService.internetConnectionAvailability
+                              ? Colors.black
+                              : Colors.white);
+                } else if (snapshot.hasData) {
+                  //TODO: return product list
+                }
+            }
             return const Text('Hello');
           },
         ),

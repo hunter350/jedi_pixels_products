@@ -1,4 +1,4 @@
-class ApiServiceValues{
+class ApiServiceValues {
   static const String authBaseUrl = 'dummyjson.com';
   static const String authBaseUrlPath = 'auth/login';
   static const String userName = 'froachel';
