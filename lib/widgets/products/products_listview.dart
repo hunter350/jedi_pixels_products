@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jedi_pixels_products/helpers/app_helpers.dart';
 import '../../models/product/product_model.dart';
 import 'products_listview_item1.dart';
+import 'products_listview_item2.dart';
 import 'products_listview_item_card.dart';
 
 class ProductsListView extends StatelessWidget {
@@ -23,28 +24,26 @@ class ProductsListView extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
         const SliverToBoxAdapter(
-          child: Icon(Icons.flutter_dash, size: 48,),
+          child: Icon(
+            Icons.flutter_dash,
+            size: 48,
+          ),
         ),
         SliverList(
-          delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-            switch(selectedListType){
-              case SelectedListType.card:
-                return ProductsListViewCard(
-                    productModel: productsList,
-                  index: index
-                );
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              switch (selectedListType) {
+                case SelectedListType.card:
+                  return ProductsListViewCard(
+                      productModel: productsList, index: index);
                 case SelectedListType.list1:
                   return ProductsListViewItem1(
-                      productModel: productsList,
-                      index: index
-                  );
-              // case SelectedListType.list2:
-              //   return ProductsListViewItem2(
-              //       productModel: productsList,
-              //       index: index
-              //   );
-            }
-          },
+                      productModel: productsList, index: index);
+                case SelectedListType.list2:
+                  return ProductsListViewItem2(
+                      productModel: productsList, index: index);
+              }
+            },
             childCount: productsList.length,
           ),
         )

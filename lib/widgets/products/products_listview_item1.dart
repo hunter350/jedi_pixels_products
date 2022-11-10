@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jedi_pixels_products/models/product/product_model.dart';
-
 import '../star_rating.dart';
 
 class ProductsListViewItem1 extends StatelessWidget {
