@@ -1,5 +1,4 @@
 import 'dart:isolate';
-
 import 'package:flutter/foundation.dart';
 import 'package:jedi_pixels_products/models/product/product_list_model.dart';
 import 'package:jedi_pixels_products/services/auth/api_values_service.dart';

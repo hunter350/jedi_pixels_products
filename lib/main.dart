@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         primaryColorLight: Colors.white,
         brightness: Brightness.dark,
-        canvasColor: Colors.blueGrey.shade50,
+        canvasColor: Colors.blueGrey.shade300,
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.grey,
