@@ -61,19 +61,22 @@ class ProductsListView extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int indexImages) {
               debugPrint('Build: Card - ListView.builder $indexImages');
-              return ProductsListViewCard(productModel: productsList, index: indexImages);
+              return ProductsListViewCard(
+                  productModel: productsList, index: indexImages);
             });
       case SelectedListType.list1:
         return ListView.separated(
-            itemCount: productsList.length,
-            controller: scrollController,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int indexImages) {
-              debugPrint('Build: List 1 - ListView.separated $indexImages');
-              return ProductsListViewItem1(productModel: productsList, index: indexImages);
-            },
-            separatorBuilder: (BuildContext context, int indexImages) => const Divider(),
-            );
+          itemCount: productsList.length,
+          controller: scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int indexImages) {
+            debugPrint('Build: List 1 - ListView.separated $indexImages');
+            return ProductsListViewItem1(
+                productModel: productsList, index: indexImages);
+          },
+          separatorBuilder: (BuildContext context, int indexImages) =>
+              const Divider(),
+        );
       case SelectedListType.list2:
         return ListView.separated(
           itemCount: productsList.length,
@@ -81,9 +84,11 @@ class ProductsListView extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int indexImages) {
             debugPrint('Build: List 2 - ListView.separated $indexImages');
-            return ProductsListViewItem1(productModel: productsList, index: indexImages);
+            return ProductsListViewItem2(
+                productModel: productsList, index: indexImages);
           },
-          separatorBuilder: (BuildContext context, int indexImages) => const Divider(),
+          separatorBuilder: (BuildContext context, int indexImages) =>
+              const Divider(),
         );
     }
   }

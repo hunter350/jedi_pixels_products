@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
 import 'product/product_list_service.dart';
 
 class ConnectionService {

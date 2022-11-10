@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
     }
 
     //Retrieve the next products
-    productService.getProduct(authServiceResponse.token);
+    productService.getProducts(authServiceResponse.token);
   }
 
   @override
