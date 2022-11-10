@@ -11,7 +11,7 @@ class ProductsListModel {
 
   List<ProductModel> products;
   int total;
-  int skip;
+  String skip;
   int limit;
 
   factory ProductsListModel.fromRawJson(String str) => ProductsListModel.fromJson(json.decode(str));
