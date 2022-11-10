@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class AuthServiceResponse {
   int id = 0;
-  String userName = '';
+  String username = '';
   String email = '';
   String firstName = '';
   String lastName = '';
