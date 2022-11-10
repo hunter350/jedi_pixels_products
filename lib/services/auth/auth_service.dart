@@ -45,11 +45,11 @@ class AuthService {
       }
 
       if (response.statusCode == 404) {
-          authServiceResponse.error = 'Failed to authorize:\n 404 Not Found';
+          authServiceResponse.error = 'Failed to authorize:\n404 Not Found';
       }else if(response.statusCode == 400){
         authServiceResponse.error = AuthErrorModel.fromRawJson(response.body).message;
       }else{
-        authServiceResponse.error = 'Failed to authorize:\n Unknown Error';
+        authServiceResponse.error = 'Failed to authorize:\nUnknown Error';
       }
       return authServiceResponse;
     });
