@@ -19,37 +19,72 @@ class ProductsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: scrollController,
-      physics: const AlwaysScrollableScrollPhysics(),
-      slivers: [
-        const SliverToBoxAdapter(
-          child: Icon(
-            Icons.flutter_dash,
-            size: 48,
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              switch (selectedListType) {
-                case SelectedListType.card:
-                  return ProductsListViewCard(
-                      productModel: productsList, index: index);
-                case SelectedListType.list1:
-                  return ProductsListViewItem1(
-                      productModel: productsList, index: index);
-                case SelectedListType.list2:
-                  return ProductsListViewItem2(
-                      productModel: productsList, index: index);
-              }
-            },
-            childCount: productsList.length,
-          ),
-        )
-      ],
-    );
+    // return CustomScrollView(
+    //   controller: scrollController,
+    //   physics: const AlwaysScrollableScrollPhysics(),
+    //   slivers: [
+    //     const SliverToBoxAdapter(
+    //       child: Icon(
+    //         Icons.flutter_dash,
+    //         size: 48,
+    //       ),
+    //     ),
+    //     SliverList(
+    //       delegate: SliverChildBuilderDelegate(
+    //         (BuildContext context, int index) {
+    //    debugPrint('Build: ${productsList.length}');
+    //           switch (selectedListType) {
+    //             case SelectedListType.card:
+    //               return ProductsListViewCard(
+    //                   productModel: productsList, index: index);
+    //             case SelectedListType.list1:
+    //               return ProductsListViewItem1(
+    //                   productModel: productsList, index: index);
+    //             case SelectedListType.list2:
+    //               return ProductsListViewItem2(
+    //                   productModel: productsList, index: index);
+    //           }
+    //         },
+    //         childCount: productsList.length,
+    //       ),
+    //     )
+    //   ],
+    // );
 
     //TODO: Create with a ListView.builder and ListView.separeted to test performance
+    debugPrint('Build: ${productsList.length}');
+    switch (selectedListType) {
+      case SelectedListType.card:
+        return ListView.builder(
+            itemCount: productsList.length,
+            controller: scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int indexImages) {
+              debugPrint('Build: Card - ListView.builder $indexImages');
+              return ProductsListViewCard(productModel: productsList, index: indexImages);
+            });
+      case SelectedListType.list1:
+        return ListView.separated(
+            itemCount: productsList.length,
+            controller: scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int indexImages) {
+              debugPrint('Build: List 1 - ListView.separated $indexImages');
+              return ProductsListViewItem1(productModel: productsList, index: indexImages);
+            },
+            separatorBuilder: (BuildContext context, int indexImages) => const Divider(),
+            );
+      case SelectedListType.list2:
+        return ListView.separated(
+          itemCount: productsList.length,
+          controller: scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int indexImages) {
+            debugPrint('Build: List 2 - ListView.separated $indexImages');
+            return ProductsListViewItem1(productModel: productsList, index: indexImages);
+          },
+          separatorBuilder: (BuildContext context, int indexImages) => const Divider(),
+        );
+    }
   }
 }
