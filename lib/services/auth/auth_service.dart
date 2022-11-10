@@ -32,7 +32,7 @@ class AuthService {
       url,
       headers: {'Connection': 'keep-alive', 'Content-Type': 'application/json'},
       body: jsonEncode({
-        'username': ApiServiceValues.userName,
+        'username': ApiServiceValues.username,
         'password': ApiServiceValues.password,
       }),
     ).then((response) async {
