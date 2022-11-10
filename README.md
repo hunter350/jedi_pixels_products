@@ -1,6 +1,6 @@
 # jedi_pixels_products
 
-A new Flutter project.
+Flutter project for testing.
 
 ## Getting Started
 
