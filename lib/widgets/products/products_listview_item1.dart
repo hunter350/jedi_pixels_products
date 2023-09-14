@@ -17,36 +17,34 @@ class ProductsListViewItem1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         AspectRatio(
-            aspectRatio: 4,
+          aspectRatio: 4,
           child: SizedBox(
-            height: 120,
-            child: productModel[index].images.length == 1 ?
-            Image.network(
-                productModel[index].thumbnail,
-              fit: BoxFit.fitWidth,
-              width: 90,
-            )
-                :
-            ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: productModel[index].images.length,
-                itemBuilder: (BuildContext context, int indexImages) {
-                  return Container(
-                    padding: const EdgeInsets.only(right: 3),
-                    color: Theme.of(context)
-                        .primaryColor
-                        .withOpacity(0.04),
-                    child: FadeInImage.assetNetwork(
-                      placeholder:
-                      'assets/images/placeholder-image.png',
-                      fit: BoxFit.fitHeight,
-                      image: productModel[index].images[indexImages],
-                    ),
-                  );
-                })
-          ),
+              height: 120,
+              child: productModel[index].images.length == 1
+                  ? Image.network(
+                      productModel[index].thumbnail,
+                      fit: BoxFit.fitWidth,
+                      width: 90,
+                    )
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: productModel[index].images.length,
+                      itemBuilder: (BuildContext context, int indexImages) {
+                        return Container(
+                          padding: const EdgeInsets.only(right: 3),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.04),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/images/placeholder-image.png',
+                            fit: BoxFit.fitHeight,
+                            image: productModel[index].images[indexImages],
+                          ),
+                        );
+                      })),
         ),
         ListTile(
           title: Text(productModel[index].title),
@@ -55,8 +53,10 @@ class ProductsListViewItem1 extends StatelessWidget {
           trailing: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(NumberFormat.simpleCurrency().format(productModel[index].price)),
-              Text(NumberFormat.percentPattern().format(productModel[index].discountPercentage/100)),
+              Text(NumberFormat.simpleCurrency()
+                  .format(productModel[index].price)),
+              Text(NumberFormat.percentPattern()
+                  .format(productModel[index].discountPercentage / 100)),
             ],
           ),
         ),
@@ -69,18 +69,19 @@ class ProductsListViewItem1 extends StatelessWidget {
                   Text('Category: ${productModel[index].category}'),
                 ],
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  StarRating(
-                      rating: productModel[index].rating
-                  ),
+                  StarRating(rating: productModel[index].rating),
                   Text('Rating: ${productModel[index].rating}'),
                 ],
               ),
-              const SizedBox(height: 16,),
-
+              const SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),

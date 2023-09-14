@@ -5,7 +5,6 @@ import 'package:jedi_pixels_products/services/connection_service.dart';
 import 'package:jedi_pixels_products/services/product/product_list_service.dart';
 import 'package:jedi_pixels_products/widgets/products/products_listview.dart';
 import 'package:jedi_pixels_products/widgets/status_message.dart';
-
 import '../helpers/app_helpers.dart';
 import '../services/product/product_service.dart';
 
@@ -18,11 +17,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late ConnectionService connectionService;
-  late ProductService  productService;
+  late ProductService productService;
   AuthServiceResponse authServiceResponse = AuthServiceResponse();
   final ProductListService productListService = ProductListService();
   final ScrollController scrollController = ScrollController();
-  ValueNotifier<SelectedListType> selectedListType = ValueNotifier<SelectedListType>(SelectedListType.card);
+  ValueNotifier<SelectedListType> selectedListType =
+      ValueNotifier<SelectedListType>(SelectedListType.card);
 
   @override
   void initState() {
@@ -92,15 +92,15 @@ class _HomeState extends State<Home> {
 
     //Make sure we did not loose connectivity since our last products fetch
     productListService.internetConnectionAvailability =
-    await checkInternetConnection();
-    if(!productListService.internetConnectionAvailability){
-      return ;
+        await checkInternetConnection();
+    if (!productListService.internetConnectionAvailability) {
+      return;
     }
 
     //Future Enchancement: Check if authServiceResponse has not expired, otherwise re-Authenticated
-    if(authServiceResponse.token.isEmpty){
+    if (authServiceResponse.token.isEmpty) {
       getAuth();
-      return ;
+      return;
     }
 
     //Retrieve the next products
@@ -119,65 +119,66 @@ class _HomeState extends State<Home> {
                   snapshot.connectionState == ConnectionState.active) {
                 final productList = snapshot.data as List<ProductModel>;
                 return Text('Products: ${productList.length}');
-              }else{
+              } else {
                 return const Text('Products');
               }
             }),
         centerTitle: false,
         actions: [
-          IconButton(
-              onPressed: getProducts,
-              icon: const Icon(Icons.refresh)),
+          IconButton(onPressed: getProducts, icon: const Icon(Icons.refresh)),
           const SizedBox(width: 4),
           ValueListenableBuilder(
               valueListenable: selectedListType,
-              builder: (BuildContext context, SelectedListType value, Widget? child){
-               return DropdownButtonHideUnderline(
-                 child: DropdownButton(
-                     value: selectedListType.value.name.toLowerCase(),
-                     focusColor: Colors.transparent,
-                     style: TextStyle(color: Theme.of(context).primaryColorLight),
-                     dropdownColor: Theme.of(context).backgroundColor,
-                     items: [
-                       DropdownMenuItem(
-                         value: 'card',
-                           child: Row(
-                             children: const [
-                               Icon(Icons.view_agenda_outlined),
-                               SizedBox(width: 4),
-                               Text('Card')
-                             ],
-                           )),
-                       DropdownMenuItem(
-                           value: 'list1',
-                           child: Row(
-                             children: const [
-                               Icon(Icons.view_day_outlined),
-                               SizedBox(width: 4),
-                               Text('List 1')
-                             ],
-                           )),
-                       DropdownMenuItem(
-                           value: 'list2',
-                           child: Row(
-                             children: const [
-                               Icon(Icons.view_list_outlined),
-                               SizedBox(width: 4),
-                               Text('List 2')
-                             ],
-                           )),
-                     ],
-                     onChanged: (selectedValue){
-                       if(selectedValue != selectedListType.value.name.toLowerCase()){
-                         selectedListType.value = SelectedListType.values.firstWhere((element) =>
-                         element.name == selectedValue.toString().toLowerCase());
-                         productListService.refreshCurrentListProducts();
-                       }
-                     }
-                 ),
-               );
-              }
-          ),
+              builder: (BuildContext context, SelectedListType value,
+                  Widget? child) {
+                return DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      value: selectedListType.value.name.toLowerCase(),
+                      focusColor: Colors.transparent,
+                      style:
+                          TextStyle(color: Theme.of(context).primaryColorLight),
+                      dropdownColor: Theme.of(context).backgroundColor,
+                      items: [
+                        DropdownMenuItem(
+                            value: 'card',
+                            child: Row(
+                              children: const [
+                                Icon(Icons.view_agenda_outlined),
+                                SizedBox(width: 4),
+                                Text('Card')
+                              ],
+                            )),
+                        DropdownMenuItem(
+                            value: 'list1',
+                            child: Row(
+                              children: const [
+                                Icon(Icons.view_day_outlined),
+                                SizedBox(width: 4),
+                                Text('List 1')
+                              ],
+                            )),
+                        DropdownMenuItem(
+                            value: 'list2',
+                            child: Row(
+                              children: const [
+                                Icon(Icons.view_list_outlined),
+                                SizedBox(width: 4),
+                                Text('List 2')
+                              ],
+                            )),
+                      ],
+                      onChanged: (selectedValue) {
+                        if (selectedValue !=
+                            selectedListType.value.name.toLowerCase()) {
+                          selectedListType.value = SelectedListType.values
+                              .firstWhere((element) =>
+                                  element.name ==
+                                  selectedValue.toString().toLowerCase());
+                          productListService.refreshCurrentListProducts();
+                        }
+                      }),
+                );
+              }),
         ],
       ),
       body: SafeArea(
@@ -214,19 +215,18 @@ class _HomeState extends State<Home> {
                               ? Colors.black
                               : Colors.white);
                 } else if (snapshot.hasData) {
-                 final productsList = snapshot.data as List<ProductModel>;
+                  final productsList = snapshot.data as List<ProductModel>;
 
-                 return ProductsListView(
-                     productsList: productsList,
-                     scrollController: scrollController,
-                     selectedListType: selectedListType.value);
-                }else{
+                  return ProductsListView(
+                      productsList: productsList,
+                      scrollController: scrollController,
+                      selectedListType: selectedListType.value);
+                } else {
                   return const StatusMessage(
                       message: 'Not able to retrieve products',
                       bannerMessage: 'error',
                       bannerColor: Colors.red,
-                      textColor: Colors.white
-                  );
+                      textColor: Colors.white);
                 }
             }
             return const Text('Hello');

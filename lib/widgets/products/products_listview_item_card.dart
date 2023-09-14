@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/product/product_model.dart';
 import 'package:intl/intl.dart';
-
 import '../star_rating.dart';
 
 class ProductsListViewCard extends StatelessWidget {
@@ -84,7 +83,6 @@ class ProductsListViewCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16,),
-
               ],
             ),
           ),
